@@ -5,5 +5,5 @@ use App\Query\Query;
 
 interface IAdapter
 {
-    public function executeQuery(Query $query): array;
+    public function executeQuery(Query $query): array|bool;
 }

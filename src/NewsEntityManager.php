@@ -1,6 +1,6 @@
 <?php
 
-namespace App\NewsEntityManager;
+namespace App;
 use App\VO\UID;
 use App\Model\News;
 use App\Adapter\MySQLAdapter;

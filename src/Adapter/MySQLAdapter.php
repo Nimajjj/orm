@@ -7,7 +7,7 @@ final class MySQLAdapter implements IAdapter
 {
     private ?\PDO $database = null;
 
-    public function executeQuery(Query $query): array
+    public function executeQuery(Query $query): array|bool
     {
         $rawQuery = $query->toRawSql();
         $statement = $this->getDatabase()->prepare($rawQuery); 

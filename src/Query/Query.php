@@ -3,6 +3,7 @@
 namespace App\Query;
 use App\Query\QueryAction;
 use App\Utils\EnumsUtils;
+use App\VO\UID;
 
 final class Query
 {
@@ -64,7 +65,24 @@ final class Query
     private function buildInsertQuery(): string
     {
         $columns = implode(', ', $this->columns);
-        $values = implode(', ', array_map(fn($value) => "'$value'", $this->values));
+        $values = implode(', ', array_map(
+            function($value): string
+            {
+                if ($value instanceof UID)
+                {
+                    $v = $value->getValue();
+                    return "'$v'";
+                }
+
+                if ($value instanceof \DateTimeImmutable)
+                {
+                    $v = $value->format('Y-m-d H:i:s');
+                    return "'$v'";
+                }
+
+                return "'$value'";
+            },
+             $this->values));
         return "INSERT INTO {$this->table} ($columns) VALUES ($values);";
     }
     
