@@ -8,7 +8,7 @@ final class UID
 
     public function __construct(?string $value = null)
     {
-        $this->value = $value ? $value : $this->generateUID();
+        $this->value = $value ?: $this->generateUID();
     }
 
     public function getValue(): string
