@@ -25,13 +25,9 @@ final class NewsEntityManager
             ->buildValues([$news->getId(), $news->getContent(), $news->getCreatedAt()])
             ->build();
         
-        var_dump($query);
-        var_dump($query->toRawSql());
-        
-        $adapter = new MySQLAdapter(); // TODO : pass adapter in porivate attribute
+        $adapter = new MySQLAdapter(); // TODO : pass adapter in private attribute
     
         $result = $adapter->executeQuery($query);
-        var_dump($result);
 
         // TODO : verify result
 

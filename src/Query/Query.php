@@ -68,12 +68,6 @@ final class Query
         $values = implode(', ', array_map(
             function($value): string
             {
-                if ($value instanceof UID)
-                {
-                    $v = $value->getValue();
-                    return "'$v'";
-                }
-
                 if ($value instanceof \DateTimeImmutable)
                 {
                     $v = $value->format('Y-m-d H:i:s');

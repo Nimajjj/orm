@@ -11,6 +11,11 @@ final class UID
         $this->value = $value ?: $this->generateUID();
     }
 
+    public function __tostring(): string
+    {
+        return $this->value;
+    }
+
     public function getValue(): string
     {
         return $this->value;
