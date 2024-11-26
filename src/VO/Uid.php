@@ -1,6 +1,6 @@
 <?php
 
-namespace App\VO\UID;
+namespace App\VO;
 
 final class UID
 {
