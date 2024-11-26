@@ -29,24 +29,14 @@ final class Query
     public function toRawSql(): string
     {
         $action = EnumsUtils::QueryActionToString($this->action);
-    
-        switch ($this->action) 
-        {
-            case QueryAction::SELECT:
-                return $this->buildSelectQuery();
-    
-            case QueryAction::INSERT:
-                return $this->buildInsertQuery();
-    
-            case QueryAction::UPDATE:
-                return $this->buildUpdateQuery();
-    
-            case QueryAction::DELETE:
-                return $this->buildDeleteQuery();
-    
-            default:
-                throw new \InvalidArgumentException("Invalid Query Action");
-        }
+
+        return match ($this->action) {
+            QueryAction::SELECT => $this->buildSelectQuery(),
+            QueryAction::INSERT => $this->buildInsertQuery(),
+            QueryAction::UPDATE => $this->buildUpdateQuery(),
+            QueryAction::DELETE => $this->buildDeleteQuery(),
+            default => throw new \InvalidArgumentException("Invalid Query Action"),
+        };
     }
     
     private function buildSelectQuery(): string

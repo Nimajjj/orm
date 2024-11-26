@@ -1,98 +1,84 @@
 <?php
 
-//namespace Benjamin\Orm\Repository;
-//use App\IAdapter;
-//use Benjamin\Orm\Adapter\MySQLAdapter;
-//use Benjamin\Orm\Model\News;
-//use Benjamin\Orm\Query\QueryAction;
-//use Benjamin\Orm\Query\QueryBuilder;
-//use Benjamin\Orm\Query\QueryCondition;
-//use Benjamin\Orm\Query\QueryLogicalOperator;
+namespace App\Repository;
+
+use App\Adapter\MySQLAdapter;
+use App\Model\News;
+use App\Query\QueryAction;
+use App\Query\QueryCondition;
+use App\Query\QueryBuilder;
+use App\VO\UID;
+use DateMalformedStringException;
 
 class NewsRepository {
-    private IAdapter $adapter;
+    private MySQLAdapter $adapter;
     private QueryBuilder $queryBuilder;
 
-    public function __construct(IAdapter $adapter, QueryBuilder $queryBuilder) {
+    public function __construct(MySQLAdapter $adapter, QueryBuilder $queryBuilder) {
         $this->adapter = $adapter;
         $this->queryBuilder = $queryBuilder;
     }
 
-    public final function getById(string $id) : News {
+    /**
+     * @throws DateMalformedStringException
+     */
+    public final function getById(string $id): News {
         $query = $this->queryBuilder
             ->buildAction(QueryAction::SELECT)
             ->buildTable('News')
-            ->buildColumns(['ID', 'Value', 'CreatedAt'])
-            ->buildCondition('ID', QueryCondition::IS_EQUAL, $id, null)
+            ->buildColumns(['id', 'content', 'created_at'])
+            ->buildCondition('id', QueryCondition::IS_EQUAL, $id, null)
             ->build();
 
-        $result = $this->adapter->executeQuery($query);
+        $result = [];
+        $success = $this->adapter->executeQuery($query, $result);
 
-        return new News($result['ID'], $result['Value'], $result['CreatedAt']);
+        if (!$success || empty($result)) {
+            throw new \RuntimeException("No news found for ID: $id");
+        }
+
+        $data = $result[0];
+
+        return (new News())
+            ->setId(new UID($data['id']))
+            ->setContent($data['content'])
+            ->setCreatedAt(new \DateTimeImmutable($data['created_at']));
+
     }
 
-    public final function findById(String $id) : ?News {
+
+    /**
+     * @throws DateMalformedStringException
+     */
+    public final function findById(string $id): ?News {
         $query = $this->queryBuilder
-            ->buildAction(QueryAction::SELECT)
-            ->buildTable('News')
-            ->buildColumns(['ID', 'Value', 'CreatedAt'])
-            ->buildCondition('ID', QueryCondition::IS_EQUAL, $id, null)
-            ->build();
+                ->resetConditions()
+                ->buildAction(QueryAction::SELECT)
+                ->buildTable('News')
+                ->buildColumns(['id', 'content', 'created_at'])
+                ->buildCondition('id', QueryCondition::IS_EQUAL, $id, null)
+                ->build();
 
-        $result = $this->adapter->executeQuery($query);
 
-        return new News($result['ID'], $result['Value'], $result['CreatedAt']);
+        $result = [];
+        $success = $this->adapter->executeQuery($query, $result);
+
+        if (!$success || empty($result)) {
+            return null;
+        }
+
+        $data = $result[0];
+
+        return (new News())
+            ->setId(new UID($data['id']))
+            ->setContent($data['content'])
+            ->setCreatedAt(new \DateTimeImmutable($data['created_at']));
     }
+
+
 }
 
 
-
-<?php
-
-namespace Benjamin\Orm\Repository;
-use Benjamin\Orm\Adapter\IAdapter;
-use Benjamin\Orm\Adapter\MySQLAdapter;
-use Benjamin\Orm\Model\News;
-use Benjamin\Orm\Query\QueryAction;
-use Benjamin\Orm\Query\QueryBuilder;
-use Benjamin\Orm\Query\QueryCondition;
-use Benjamin\Orm\Query\QueryLogicalOperator;
-
-class NewsRepository {
-    private IAdapter $adapter;
-    private QueryBuilder $queryBuilder;
-
-    public function __construct(IAdapter $adapter, QueryBuilder $queryBuilder) {
-        $this->adapter = $adapter;
-        $this->queryBuilder = $queryBuilder;
-    }
-
-    public final function getById(string $id) : News {
-        $query = $this->queryBuilder
-            ->buildAction(QueryAction::SELECT)
-            ->buildTable('News')
-            ->buildColumns(['ID', 'Value', 'CreatedAt'])
-            ->buildCondition('ID', QueryCondition::IS_EQUAL, $id, null)
-            ->build();
-
-        $result = $this->adapter->executeQuery($query);
-
-        return new News($result['ID'], $result['Value'], $result['CreatedAt']);
-    }
-
-    public final function findById(String $id) : ?News {
-        $query = $this->queryBuilder
-            ->buildAction(QueryAction::SELECT)
-            ->buildTable('News')
-            ->buildColumns(['ID', 'Value', 'CreatedAt'])
-            ->buildCondition('ID', QueryCondition::IS_EQUAL, $id, null)
-            ->build();
-
-        $result = $this->adapter->executeQuery($query);
-
-        return new News($result['ID'], $result['Value'], $result['CreatedAt']);
-    }
-}
 
 
 

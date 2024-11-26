@@ -2,6 +2,8 @@
 
 namespace App\VO;
 
+use Random\RandomException;
+
 final class UID
 {
     private string $value;
@@ -26,7 +28,10 @@ final class UID
         $this->value = $value;
     }
 
-    private function generateUID(): string 
+    /**
+     * @throws RandomException
+     */
+    private function generateUID(): string
     {
         // Generate a UUID (version 4) that is valid and unique
         return bin2hex(random_bytes(16)); // 32 characters long UID

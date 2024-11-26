@@ -2,6 +2,7 @@
 namespace App\Adapter;
 use App\Adapter\IAdapter;
 use App\Query\Query;
+use App\Query\QueryAction;
 
 final class MySQLAdapter implements IAdapter
 {
@@ -10,19 +11,21 @@ final class MySQLAdapter implements IAdapter
     public function executeQuery(Query $query, array &$outResult): bool
     {
         $rawQuery = $query->toRawSql();
-        $statement = $this->getDatabase()->prepare($rawQuery); 
-        assert($statement, "Error while preparing the query : '$rawQuery'");
-    
-        $statement->execute();
-        $result = $statement->fetch();
+        $statement = $this->getDatabase()->prepare($rawQuery);
+        assert($statement, "Error while preparing the query: '$rawQuery'");
 
-        if (is_array($result))
-        {
-            $outResult = $result;
+        $success = $statement->execute();
+
+        if ($query->action === QueryAction::SELECT) {
+            $outResult = $statement->fetchAll(\PDO::FETCH_ASSOC);
+            return $success && !empty($outResult);
         }
 
-        return $result;
+        $outResult = [];
+        return $success;
     }
+
+
 
     private function getDatabase(): \PDO
     {

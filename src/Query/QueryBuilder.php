@@ -63,6 +63,12 @@ final class QueryBuilder
         return $this;
     }
 
+    public function resetConditions(): QueryBuilder
+    {
+        $this->query->condition = [];
+        return $this;
+    }
+
 
     public function build(): Query
     {
