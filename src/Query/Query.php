@@ -17,6 +17,7 @@ final class Query
 
     public function isValid(): bool
     {
+
         return true;
     }
 
@@ -25,5 +26,10 @@ final class Query
         $query = "";
 
         return $query;
+    }
+
+    private function isActionValid(): bool
+    {
+        return true;
     }
 }

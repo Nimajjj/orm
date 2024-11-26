@@ -2,7 +2,7 @@
     "name": "benjamin/orm",
     "autoload": {
         "psr-4": {
-            "Benjamin\\Orm\\": "src/"
+            "App\\": "src/"
         }
     },
     "authors": [

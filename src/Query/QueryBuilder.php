@@ -45,7 +45,7 @@ final class QueryBuilder
         string $subject, 
         QueryCondition $condition, 
         string $value, 
-        ?QueryLogicalOperator $operator
+        ?QueryLogicalOperator $operator = null
     ): QueryBuilder
     {
         $this->query->condition[] = [
