@@ -34,6 +34,12 @@ final class QueryBuilder
         $this->query->columns = $columns;
         return $this;
     }
+
+    public function buildAllColumns(): QueryBuilder
+    {
+        $this->query->columns = ["*"];
+        return $this;
+    }
     
     public function buildValues(array $values): QueryBuilder
     {

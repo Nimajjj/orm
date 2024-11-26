@@ -13,9 +13,13 @@ use App\Query\QueryCondition;
 
 $query = (new QueryBuilder())
     ->buildAction(QueryAction::SELECT)
-    ->buildColumns(["ID", "Value", "CreatedAt"])
-    ->buildCondition("ID", QueryCondition::IS_EQUAL, "1")
+    ->buildTable("News")
+    ->buildAllColumns()
+    ->buildCondition("id", QueryCondition::IS_EQUAL, "1")
     ->build();
+
+var_dump($query);
+var_dump($query->toRawSql());
 
 $adapter = new MySQLAdapter();
 
