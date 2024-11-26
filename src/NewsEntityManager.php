@@ -27,7 +27,8 @@ final class NewsEntityManager
         
         $adapter = new MySQLAdapter(); // TODO : pass adapter in private attribute
     
-        $result = $adapter->executeQuery($query);
+        $__ = [];
+        $result = $adapter->executeQuery($query, $__);
 
         assert(!$result, "Querry failed.");
 

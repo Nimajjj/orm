@@ -13,7 +13,7 @@ use App\VO\UID;
 $factory = new NewsFactory();
 $news = $factory->createNews(
     new UID(),
-    "Lorem ipsum", 
+    "Lauie Jeham", 
     new \DateTimeImmutable('now')
 );
 

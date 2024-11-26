@@ -7,7 +7,7 @@ final class MySQLAdapter implements IAdapter
 {
     private ?\PDO $database = null;
 
-    public function executeQuery(Query $query): array|bool
+    public function executeQuery(Query $query, array &$outResult): bool
     {
         $rawQuery = $query->toRawSql();
         $statement = $this->getDatabase()->prepare($rawQuery); 
@@ -15,9 +15,11 @@ final class MySQLAdapter implements IAdapter
     
         $statement->execute();
         $result = $statement->fetch();
-        assert($result);
 
-        var_dump($result);
+        if (is_array($result))
+        {
+            $outResult = $result;
+        }
 
         return $result;
     }
