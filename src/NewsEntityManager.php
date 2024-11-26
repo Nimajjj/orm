@@ -1,8 +1,8 @@
 <?php
 
 namespace App\NewsEntityManager;
-use App\VO\UID\UID;
-use App\Model\News\News;
+use App\VO\UID;
+use App\Model\News;
 use App\Adapter\MySQLAdapter;
 use App\Query\QueryBuilder;
 use App\Query\QueryAction;
@@ -28,7 +28,7 @@ final class NewsEntityManager
         var_dump($query);
         var_dump($query->toRawSql());
         
-        $adapter = new MySQLAdapter();
+        $adapter = new MySQLAdapter(); // TODO : pass adapter in porivate attribute
     
         $result = $adapter->executeQuery($query);
         var_dump($result);

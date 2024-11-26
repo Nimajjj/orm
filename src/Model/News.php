@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Model;
-use App\VO\UID\UID;
+use App\VO\UID;
 
 final class News
 {
