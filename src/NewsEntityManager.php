@@ -29,7 +29,7 @@ final class NewsEntityManager
     
         $result = $adapter->executeQuery($query);
 
-        // TODO : verify result
+        assert(!$result, "Querry failed.");
 
         return $news;
     }
