@@ -111,6 +111,12 @@ final class Query
         foreach ($this->columns as $index => $column) 
         {
             $value = $this->values[$index] ?? '';
+            if ($value instanceof \DateTimeImmutable)
+            {
+                $v = $value->format('Y-m-d H:i:s');
+                $setClauses[] = "$column = '$v'";
+                continue;
+            }
             $setClauses[] = "$column = '$value'";
         }
         return implode(', ', $setClauses);

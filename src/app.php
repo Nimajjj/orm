@@ -12,10 +12,10 @@ use App\VO\UID;
 
 $factory = new NewsFactory();
 $news = $factory->createNews(
-    new UID(),
-    "Lauie Jeham", 
+    new UID("1596c72050f2a63000f917dbc7ed63f8"),
+    "Super-man", 
     new \DateTimeImmutable('now')
 );
 
 $manager = new NewsEntityManager();
-$manager->create($news);
+$manager->update($news);
