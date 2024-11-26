@@ -6,14 +6,6 @@ use App\Query\QueryAction;
 use App\Query\QueryCondition;
 use App\Query\QueryLogicalOperator;
 
-/*
-    ->buildAction(Querry::UPDATE)
-    ->buildTable("News")
-    ->buildColumns(["ID", "Value", "CreatedAt"])
-    ->buildValues([123, "Hello World", "01/23/2024"])
-    ->buildCondition("ID", Querry::IS_EQUAL, "123")
-    ->build();
-*/
 
 final class QueryBuilder
 {

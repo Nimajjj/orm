@@ -19,4 +19,11 @@ final class Query
     {
         return true;
     }
+
+    public function toRawSql(): string
+    {
+        $query = "";
+
+        return $query;
+    }
 }
