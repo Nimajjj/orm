@@ -32,5 +32,5 @@ try
 }
 catch (\Exception $e)
 {
-    echo "Failed to retrieve $news\n";
+    echo "Failed to retrieve $news : $e\n";
 }
