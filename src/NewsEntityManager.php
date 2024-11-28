@@ -36,9 +36,9 @@ final class NewsEntityManager
             ->build();
         
         $__ = [];
-        $result = $this->adapter->executeQuery($query, $__);
+        $error = $this->adapter->executeQuery($query, $__);
 
-        assert(!$result, "Querry failed.");
+        assert(!$error, "Querry failed.");
 
         return $news;
     }
@@ -54,9 +54,9 @@ final class NewsEntityManager
             ->build();
 
         $__ = [];
-        $result = $this->adapter->executeQuery($query, $__);
+        $error = $this->adapter->executeQuery($query, $__);
 
-        assert(!$result, "Querry failed.");
+        assert(!$error, "Querry failed.");
 
         return $news;
     }
@@ -70,8 +70,8 @@ final class NewsEntityManager
             ->build();
 
         $__ = [];
-        $result = $this->adapter->executeQuery($query, $__);
+        $error = $this->adapter->executeQuery($query, $__);
 
-        assert(!$result, "Querry failed.");
+        assert(!$error, "Querry failed.");
     }
 }
