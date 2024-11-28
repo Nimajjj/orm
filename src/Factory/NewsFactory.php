@@ -4,6 +4,8 @@ namespace App\Factory;
 use App\VO\UID;
 use App\Model\News;
 
+// could be static :S
+
 final class NewsFactory
 {
     public function createNews(

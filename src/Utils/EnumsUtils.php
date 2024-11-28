@@ -10,7 +10,8 @@ final class EnumsUtils
 
     static function QueryActionToString(QueryAction $queryAction): string
     {
-        return match ($queryAction) {
+        return match ($queryAction) 
+        {
             QueryAction::SELECT => 'SELECT',
             QueryAction::INSERT => 'INSERT',
             QueryAction::UPDATE => 'UPDATE',
@@ -20,7 +21,8 @@ final class EnumsUtils
     
     static function QueryConditionToString(QueryCondition $queryCondition): string
     {
-        return match ($queryCondition) {
+        return match ($queryCondition) 
+        {
             QueryCondition::IS_EQUAL => '=',
             QueryCondition::IS_DIFFERENT => '!=',
             QueryCondition::IS_GREATER => '>',
@@ -30,7 +32,8 @@ final class EnumsUtils
     
     static function QueryLogicalOperatorToString(QueryLogicalOperator $queryLogicalOperator): string
     {
-        return match ($queryLogicalOperator) {
+        return match ($queryLogicalOperator) 
+        {
             QueryLogicalOperator::AND => 'AND',
             QueryLogicalOperator::OR => 'OR',
         };

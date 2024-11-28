@@ -16,7 +16,8 @@ final class MySQLAdapter implements IAdapter
 
         $success = $statement->execute();
 
-        if ($query->action === QueryAction::SELECT) {
+        if ($query->action === QueryAction::SELECT) 
+        {
             $outResult = $statement->fetchAll(\PDO::FETCH_ASSOC);
             return $success && !empty($outResult);
         }
@@ -29,7 +30,8 @@ final class MySQLAdapter implements IAdapter
 
     private function getDatabase(): \PDO
     {
-        if ($this->database === null) {
+        if ($this->database === null) 
+        {
             $file = 'credentials.json';
             $data = file_get_contents($file);
             $obj = json_decode($data);

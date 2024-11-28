@@ -30,7 +30,8 @@ final class Query
     {
         $action = EnumsUtils::QueryActionToString($this->action);
 
-        return match ($this->action) {
+        return match ($this->action) 
+        {
             QueryAction::SELECT => $this->buildSelectQuery(),
             QueryAction::INSERT => $this->buildInsertQuery(),
             QueryAction::UPDATE => $this->buildUpdateQuery(),
