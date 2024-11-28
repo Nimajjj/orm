@@ -8,50 +8,37 @@ use App\Query\QueryAction;
 use App\Query\QueryCondition;
 use App\Query\QueryBuilder;
 use App\VO\UID;
-use DateMalformedStringException;
 
 class NewsRepository {
     private MySQLAdapter $adapter;
-    private QueryBuilder $queryBuilder;
-
-    public function __construct(MySQLAdapter $adapter, QueryBuilder $queryBuilder) {
+    public function __construct(MySQLAdapter $adapter)
+    {
         $this->adapter = $adapter;
-        $this->queryBuilder = $queryBuilder;
     }
 
     /**
-     * @throws DateMalformedStringException
+     * @throws \RuntimeException
+     * @throws \DateMalformedStringException
      */
-    public final function getById(string $id): News {
-        $query = $this->queryBuilder
-            ->buildAction(QueryAction::SELECT)
-            ->buildTable('News')
-            ->buildColumns(['id', 'content', 'created_at'])
-            ->buildCondition('id', QueryCondition::IS_EQUAL, $id, null)
-            ->build();
+    public final function getById(string $id): News 
+    {
+        $news = $this->findById($id);
 
-        $result = [];
-        $success = $this->adapter->executeQuery($query, $result);
-
-        if (!$success || empty($result)) {
+        if (!$news) 
+        {
             throw new \RuntimeException("No news found for ID: $id");
         }
 
-        $data = $result[0];
-
-        return (new News())
-            ->setId(new UID($data['id']))
-            ->setContent($data['content'])
-            ->setCreatedAt(new \DateTimeImmutable($data['created_at']));
-
+        return $news;
     }
 
 
     /**
-     * @throws DateMalformedStringException
+     * @throws \DateMalformedStringException
      */
-    public final function findById(string $id): ?News {
-        $query = $this->queryBuilder
+    public final function findById(string $id): ?News 
+    {
+        $query = (new QueryBuilder())
                 ->resetConditions()
                 ->buildAction(QueryAction::SELECT)
                 ->buildTable('News')
@@ -63,7 +50,8 @@ class NewsRepository {
         $result = [];
         $success = $this->adapter->executeQuery($query, $result);
 
-        if (!$success || empty($result)) {
+        if (!$success || empty($result)) 
+        {
             return null;
         }
 

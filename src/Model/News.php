@@ -42,5 +42,11 @@ final class News
         return $this;
     }
 
+    public function __tostring(): string
+    {
+        $output = "News(" . $this->getId()->getValue() . ", " . $this->getContent() . ", " . $this->getCreatedAt()->format('Y-m-d H:i:s') . ")";
+        return $output;
+    }
+
 
 }

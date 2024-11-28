@@ -7,13 +7,23 @@ use App\Adapter\MySQLAdapter;
 use App\Query\QueryBuilder;
 use App\Query\QueryAction;
 use App\Query\QueryCondition;
+use App\Repository\NewsRepository;
 
 
 final class NewsEntityManager
 {
-    public function getByID(UID $id): ?News
-    {
+    private MySQLAdapter $adapter;
+    private NewsRepository $repository;
 
+    public function __construct()
+    {
+        $this->adapter = new MySQLAdapter();
+        $this->repository = new NewsRepository($this->adapter);
+    }
+
+    public function getByID(UID $id): News
+    {
+        return $this->repository->getById($id);
     }
 
     public function create(News $news): News
@@ -25,10 +35,8 @@ final class NewsEntityManager
             ->buildValues([$news->getId(), $news->getContent(), $news->getCreatedAt()])
             ->build();
         
-        $adapter = new MySQLAdapter(); // TODO : pass adapter in private attribute
-    
         $__ = [];
-        $result = $adapter->executeQuery($query, $__);
+        $result = $this->adapter->executeQuery($query, $__);
 
         assert(!$result, "Querry failed.");
 
@@ -45,10 +53,8 @@ final class NewsEntityManager
             ->buildCondition("id", QueryCondition::IS_EQUAL, $news->getId()->getValue())
             ->build();
 
-        $adapter = new MySQLAdapter(); // TODO : pass adapter in private attribute
-
         $__ = [];
-        $result = $adapter->executeQuery($query, $__);
+        $result = $this->adapter->executeQuery($query, $__);
 
         assert(!$result, "Querry failed.");
 
@@ -63,10 +69,8 @@ final class NewsEntityManager
             ->buildCondition("id", QueryCondition::IS_EQUAL, $news->getId()->getValue())
             ->build();
 
-        $adapter = new MySQLAdapter(); // TODO : pass adapter in private attribute
-
         $__ = [];
-        $result = $adapter->executeQuery($query, $__);
+        $result = $this->adapter->executeQuery($query, $__);
 
         assert(!$result, "Querry failed.");
     }
