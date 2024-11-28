@@ -7,6 +7,7 @@ use App\Model\News;
 use App\Query\QueryAction;
 use App\Query\QueryCondition;
 use App\Query\QueryBuilder;
+use App\Query\QueryLogicalOperator;
 use App\VO\UID;
 
 class NewsRepository {
@@ -39,18 +40,16 @@ class NewsRepository {
     public final function findById(string $id): ?News 
     {
         $query = (new QueryBuilder())
-                ->resetConditions()
                 ->buildAction(QueryAction::SELECT)
                 ->buildTable('News')
-                ->buildColumns(['id', 'content', 'created_at'])
+                ->buildAllColumns()
                 ->buildCondition('id', QueryCondition::IS_EQUAL, $id, null)
                 ->build();
 
-
         $result = [];
-        $success = $this->adapter->executeQuery($query, $result);
+        $this->adapter->executeQuery($query, $result);
 
-        if (!$success || empty($result)) 
+        if (empty($result)) 
         {
             return null;
         }

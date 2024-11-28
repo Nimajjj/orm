@@ -14,16 +14,16 @@ final class MySQLAdapter implements IAdapter
         $statement = $this->getDatabase()->prepare($rawQuery);
         assert($statement, "Error while preparing the query: '$rawQuery'");
 
-        $success = $statement->execute();
+        $error = $statement->execute();
 
         if ($query->action === QueryAction::SELECT) 
         {
             $outResult = $statement->fetchAll(\PDO::FETCH_ASSOC);
-            return $success && !empty($outResult);
+            return $error && !empty($outResult);
         }
 
         $outResult = [];
-        return $success;
+        return $error;
     }
 
 
