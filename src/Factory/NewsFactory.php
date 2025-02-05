@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Factory;
-use App\VO\UID;
+use App\VO\Uid;
 use App\Model\News;
 
 // could be static :S
@@ -9,8 +9,8 @@ use App\Model\News;
 final class NewsFactory
 {
     public function createNews(
-        ?UID $uid,
-        string $content,
+        ?Uid               $uid,
+        string             $content,
         \DateTimeImmutable $createAt
     ): News
     {

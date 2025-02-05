@@ -4,10 +4,13 @@ namespace App\VO;
 
 use Random\RandomException;
 
-final class UID
+final class Uid
 {
     private string $value;
 
+    /**
+     * @throws RandomException
+     */
     public function __construct(?string $value = null)
     {
         $this->value = $value ?: $this->generateUID();
