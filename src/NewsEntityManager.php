@@ -21,6 +21,9 @@ final class NewsEntityManager
         $this->repository = new NewsRepository($this->adapter);
     }
 
+    /**
+     * @throws \DateMalformedStringException
+     */
     public function getByID(Uid $id): News
     {
         return $this->repository->getById($id);
